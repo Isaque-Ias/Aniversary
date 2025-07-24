@@ -1,2 +1,2 @@
 # Aniversary
-Estatísticas de aniversário
+Dados estatísticos de aniversário

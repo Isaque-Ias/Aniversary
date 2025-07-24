@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<section>
+    <fieldset>
+        <legend>Adicionar perfil</legend>
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.person.label }}<br>
+                {{ form.person(size=64) }}<br>
+                {% for error in form.person.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.datetime.label }}<br>
+                {{ form.datetime(size=32) }}<br>
+                {% for error in form.datetime.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </p>
+            <p>{{ form.submit() }}</p>
+        </form>
+    </fieldset>
+</section>
+<section>
+    <table border="1">
+        <tr>
+            <td>Pessoa</td>
+            <td>Data</td>
+            <td>Deletar</td>
+            <td>Editar</td>
+        </tr>
+        {% for aniversario in model %}
+            <tr>
+                <td>{{ aniversario.person }}</td>
+                <td>{{ aniversario.datetime }}</td>
+                <td><a href="{{ url_for('delete_aniversario', id=aniversario.id) }}"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMQAAACUCAMAAAD79nauAAAAYFBMVEX///8AAADn5+fY2NgqKiojIyP7+/sODg7q6urDw8NNTU0YGBiysrJwcHCAgICZmZkwMDD09PSjo6NTU1OsrKxjY2O7u7uLi4vQ0NCTk5M/Pz93d3fKysrg4OA4ODhaWlqGzox6AAADHUlEQVR4nO2dbXOqMBBGQeVNEQHBKlX5//+yd0YtG9s0S9hA5s5zPgJJ9pigEsgSBALEH6ElH7FE+yKcbR3C8Lx07N+09hLt0rG/qOwdwrBaOvon2RSJbOnon1ymSFyWjv5JQWJKWJACxdLRP6ESlyo2Ul08lzgwvvjjAyTcAAlICAIJSAgCCR8lak6BekaJOG+3DI4Riak8MgqUpEDEKLDdtrnldeyaBrc40crKYemw30jW4x2qCRfObmjHj6isNFc7L+X4K9mDuda5OYyWmHTh7Ibxl+N1Yq51XhLWb5DCuls66Hc6i68n78aTzeRO9bl01CqfVnOFVb1bOvCBpLad70yv2cC1IX9DdnnmgJx8alGjNJ5aKryzJj9/kVSlCin5mEqL05jBekMkrP6OmVgRiQ0ktECCBSR4QIIFJHhAggUkeECCBSR4QIIFJHhAggUkeECChU8S1TnLft2/yrLzX3NgHknkfVeW2+LHEatiW5Zdn+tL+iPxmog+3tTtt+Nzh/5eiTcS+fcxrTJLmA73ALV94YtETOY6G7qjGbbfdXcQfZG4kjgKchJX5LGD6Kop7IsEndjek/GU7oftO914ggQPSEBCEEhAQhBIQEIQSEBCEEhAQhBIQEIQSEBCEEhAQhBIQEIQSEBCEEhAQhBIQEIQSEBCEEhAQhBIQEIQSEBCEJbEiUjQtex0nf3upCnsiwRdUq08O0oyCW10i7l9kQiG/LdqdofzkH3iQ1fWG4n4Fez7yG9eA63T5qTxRiKoHqdw8iPzTPZIZ7LXPy3uj0QQ3A5F8eu5eyqK+q+CPklYAwkekGABCR6QYAEJHpBgAQkekGABCR6QYAEJHv+HBE2hdzMfP57bDCn07kMTSWM+fjw0M+rdjcSqH5qwyQVsJKYZj3snA1ZZyBtGDrqC5q1UlhBLQnOah2Uj3Bdxo2RtHp/hlkemZC3dtXlqfokMlzRvldojV+8votPzj9NbkLeq97pJ58nU4Wy4Gk3/uqI3ty5D76wjgiCfKcW19jaMBHFhDkACt+9zqGZJ1N05fj9cdTfHMJX7WIcvU9xVPqqbdJkAAAAASUVORK5CYII=" alt="Deletar" width="30"></a></td>
+                <td><a href="{{ url_for('edit_aniversario', id=aniversario.id) }}"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKEAAACUCAMAAADMOLmaAAAAbFBMVEX///8AAADu7u4mJibV1dX09PSysrJoaGiOjo7a2trPz8/d3d3ExMT8/PzLy8u3t7fm5uYxMTEUFBRzc3MNDQ0rKysgICCAgIBBQUEbGxu9vb1tbW2Hh4dgYGA8PDw2NjaZmZlOTk6jo6NWVlZpXZMlAAAGdklEQVR4nO2c63qyOhCFBQMVKRUVtVq1Kvd/jx9akgw5QJJJNu7nYf2qovV1kpUZcnA2ewcVZU7IcknKZGwStcrH9ruKntpdzp9j08gqD/sIqFqfirGROkpukaT7cmwqoPhDBoyieTo2F1Ou4nvqMDZZq2ytI4xub9EZ87kWMIrOb4CYQaDd9nDY1u+FWIImnq/ypCiKmJxhQ48MCCJYPfjTJYjjdjy6RtmOk3TSSHJ4jyhCk4h57odfWo0C9xRo4uOXeLHgUdyUY9A1yoFJJMAGkUdR3RWLxESIsQBmEgVgIxbFSrqenB6Lw/bDQIeTKyA0SXVWviRhUexeL5aXdRUZ6+YI2M0kasTZpr38C3pikX6b06lbwAhQ/DfqIuGTXuYfUm7t+ByDmMvFgjKKyaW9ykbzkzWftoF6AVX/56By3aO9+PH3sHio3jkk+zoTmKQCA7OqoZdtT9z9PVSU4sO6WN+YQZN8FaBbKVqjbO9eqtejlQPffhvbAoImPj5vRQCi3NAx/TbiV4uuj9UXMVBmPWRLmSQBNylSQ+dtDDfPF97Z6+bbcLfUMBfTmzlQx4hR/GxH5u8Zd03ziATj6/ZB+mSht8uifbrJzAkL/sW6ZyEBmw/X2SWmDZuCENYBAUWTcGnswkaXDHTXgLUYvO0UJhQSZUOzb9SEjf19CwiojeBTCrtkv4CKprtruBASdR+kku2SsxrmGHPPKJOjF2lMwiXapbyyh8+6gdYQwSZzgEn2unoN2mWWccD7M2xtLj+GGgp7TMLVsQsvU/cvqHbo3gfqhsAk+75pQWAX8Ru1D+ZhBkPYB/vnLX8kvk3b8YISDpqEKxFr/A29nQ9JCE0yPPMrILJ7yYCERibh6kaRjy3hCE1NwkTANwKTOcEIibFJWvFMwkwSlHAg1ckqfzlgZ84rEKG+3NKI8EwSdSdcwhBCkxhlqxi8QUjAQQiJrUkytUmCERKwUmdmEt7ElVTCBCD0Z5JAhHaZZNZnkjCE1iYBEVRWqb4JMSaplMvfngkzryYJQEh2loD9JvFPaG8S0Ad1U/c+Cb2bxDchMMncj0k8E2ZHyz6YDZrEL6F1PQgWmHUm8UoITGLWxMAkPU3sjzCMSTwSBjKJP0KUSYaWuX0QBjOJL0Jw2+nZJJ4IoUkykzeYm8QP4ZJ/3N7IxeAbbUx2G2IJCTdJZWuS4T7ogRCWW2bjIBhmzDar4AjBOLiznZsxMAmeEG6qCGESNGFwk2AJyYZ/XhiTIAntTQL2EFjs6HImhCYxAnQwCYows46gg0kwhMAkZotF0CR2G7LcCAnffWU2gelmEnfC3LqidjOJOyGfEw9rEmfCmEcwN3k9MIl1BN0IwR4skxA6ZRIcIdjJsx/+SDCBaeliZ8IYblQcLAoxJnElFHYC9kcRZRJXQmGn3bxvNj0fnh/0T8i2VzLpGxrkxqPrCSh7wlIE1NsFaxJHQtoN93zKWlMelvxO37WJnQjpWHOG1YoqiqCAdDSJIyENTDpb8hjNZQQPJnEjZHVX3F1NEhvah0ncCOlY89rkCzaDCBheTOJEyLYA/21oXIKcC6PoxyROhKx3EeFxxy6eTOJESDfs7+g2LKKwiy+TOBHS02B8N6BsF28mcSKkHw7Oh+WCXcAEJtIkLoS0vO4s20G7fLH98p4AbQlpeX3vbPmEdnlYTQH7J6QpTzhitVQdAcWbxIGQlddiTUjkA0LOJinizt5/O8ITvZOXzg9Ih3ec++Bpe70AH1oS0pRXyzuPH54A09fbb46E8umll2KyEk+bux3zmvG24F3EipCV1/DwwWlRbwQ+hEnoaR4eAytCWl7f/1JekeSP+ijSRahMkrb/YuFGSOua1+b4bHW+KugwfRBPSLNFOiOLi/aY/hGTSXCEbGK4lrGo5pczaiEYRzh4aK46pAR50gpFWPQe3Fzfb7mHc2AowlxjjEb1IvV0sABF+KnBu6fE3+5FFKGiG+4uC9fk8V8QHs8r4v1kEIoQzhuuay++8EzIDs7Vi1Wwc1+48fB1+qFO84BHD7FZr6kVQpFRYQnDayLEayLEayLEayLEayLEayLEayLEayLEayLEayLE6/9I2E6Sh/pNDGvRRY8be6Zd7gr2uyK2or8Vw9cCPqRnRhVbseHLHeF/38ZKdHUY/PjlV/vUzmg3ZnDRbvjNfcHWq9/ix4oTurL5w5/j0+fv4BXa50A3/AfeiVPAlLXZ7wAAAABJRU5ErkJggg==" alt="Editar" width="30"></a></td>
+            </tr>
+        {% endfor %}
+    </table>
+</section>
+{% endblock %}
